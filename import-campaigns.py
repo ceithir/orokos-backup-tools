@@ -11,12 +11,19 @@ def import_campaigns(page = 1):
     return campaigns
 
 if __name__ == "__main__":
-    campaigns = set()
+    campaigns = set(filter(lambda x: x != '', open('campaigns.txt', 'r').read().split('\n')))
 
     for i in range(1, 50000):
         new_campaigns = import_campaigns(i+1)
         campaigns = campaigns.union(new_campaigns)
 
+        if i % 100 == 0:
+            with open('campaigns.txt', 'w') as f:
+                for line in sorted(campaigns):
+                    f.write(f"{line}\n")
+            print(f'Saved up to page {str(i)}...')
+
     with open('campaigns.txt', 'w') as f:
         for line in sorted(campaigns):
             f.write(f"{line}\n")
+    print('Done')
