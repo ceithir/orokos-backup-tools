@@ -15,8 +15,6 @@ if __name__ == "__main__":
 
     for i in range(1, 50000):
         new_campaigns = import_campaigns(i+1)
-        if not new_campaigns:
-            break
         campaigns = campaigns.union(new_campaigns)
 
     with open('campaigns.txt', 'w') as f:
