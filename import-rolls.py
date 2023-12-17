@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from pathvalidate import sanitize_filename
 from urllib.parse import unquote_plus
+import os
 
 def import_rolls(campaign, page = 1):
     offset = (page-1)*20
@@ -45,13 +46,18 @@ def export_csv(campaign):
         all_rolls,
         columns = ['Time', 'Roller', 'Character','Campaign', 'Description', 'Results']
     )
-    filename = sanitize_filename(unquote_plus(campaign[2:]))
     dataFrame.to_csv(
-        f'rolls/{filename}.csv',
+        filename(campaign),
         index = False
     )
 
-if __name__ == "__main__":
-    campaign = 'c-Children+of+the+Sky'
+def filename(campaign):
+    name = sanitize_filename(unquote_plus(campaign[2:]))
+    return f'rolls/{name}.csv'
 
-    export_csv(campaign)
+if __name__ == "__main__":
+    with open('campaigns.txt', 'r') as f:
+        for line in f:
+            campaign = line.strip()
+            if not os.path.isfile(filename(campaign)):
+                export_csv(campaign)
