@@ -57,8 +57,6 @@ def filename(campaign):
 
 ignore = [
     'c-After+Conan%3A+City+of+Towersxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-    'c-Bells+of+War+%23001',
-    'c-Casa+Bonita+Monster+Party+%232%3A+Mash+Harder',
 ]
 
 if __name__ == "__main__":
@@ -66,7 +64,7 @@ if __name__ == "__main__":
         for line in f:
             campaign = line.strip()
 
-            if campaign in ignore:
+            if campaign in ignore or '%23' in campaign:
                 continue
 
             if not os.path.isfile(filename(campaign)):
