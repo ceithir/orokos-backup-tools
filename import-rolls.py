@@ -55,9 +55,18 @@ def filename(campaign):
     name = sanitize_filename(unquote_plus(campaign[2:]))
     return f'rolls/{name}.csv'
 
+ignore = [
+    'c-After+Conan%3A+City+of+Towersxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+]
+
 if __name__ == "__main__":
     with open('campaigns.txt', 'r') as f:
         for line in f:
             campaign = line.strip()
+
+            if campaign in ignore:
+                continue
+
             if not os.path.isfile(filename(campaign)):
+                print(campaign)
                 export_csv(campaign)
